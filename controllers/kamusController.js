@@ -3,6 +3,7 @@ import {
   getKamus,
   postKamus,
   putKamus,
+  searchWord,
 } from "../models/kamusModel.js";
 
 // Get All Products
@@ -45,6 +46,19 @@ export const destroyKamus = (req, res) => {
     if (err) {
       res.send(err);
     } else {
+      res.json(results);
+    }
+  });
+};
+
+export const search = (req, res) => {
+  const word = req.params.kata;
+  console.log(word);
+  searchWord(word, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
       res.json(results);
     }
   });

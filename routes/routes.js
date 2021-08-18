@@ -3,6 +3,7 @@ import express from "express";
 import {
   createKamus,
   destroyKamus,
+  search,
   showKamus,
   updateKamus,
 } from "../controllers/kamusController.js";
@@ -14,6 +15,7 @@ const router = express.Router();
 
 // Get All Product
 router.get("/kamus", showKamus);
+router.get("/find/:kata", search);
 router.post("/kamus", createKamus);
 router.post("/kamuss", (req, res) => {
   //

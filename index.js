@@ -7,6 +7,7 @@ import Router from "./routes/routes.js";
 import bodyParser from "body-parser";
 
 // init express
+
 const app = express();
 
 // use express json

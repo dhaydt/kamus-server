@@ -49,3 +49,20 @@ export const delKamus = (id, result) => {
     }
   });
 };
+
+export const searchWord = (word, result) => {
+  db.query("SELECT * FROM kamus WHERE kata = ?", [word], (err, results) => {
+    if (results === null) {
+      result(null, { message: "data not found" });
+    } else {
+      result(null, results);
+    }
+
+    // if (err) {
+    //   console.log(err);
+    //   result(err, { message: "data not founnd" });
+    // } else {
+    //   result(null, results);
+    // }
+  });
+};
