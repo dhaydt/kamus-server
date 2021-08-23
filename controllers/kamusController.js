@@ -2,6 +2,7 @@ import {
   delKamus,
   getKamus,
   postKamus,
+  postKamusDb,
   putKamus,
   searchWord,
 } from "../models/kamusModel.js";
@@ -24,6 +25,22 @@ export const createKamus = (req, res) => {
       res.send(err);
     } else {
       res.json(results);
+    }
+  });
+};
+
+export const postKamusRow = (req, res) => {
+  const data = req.body.data;
+  var stringData = JSON.stringify(data);
+  var records = JSON.parse(stringData);
+  console.log(records);
+  // console.log(resultMap);
+  // const records = req.body.data;
+  postKamusDb(records, (err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
     }
   });
 };

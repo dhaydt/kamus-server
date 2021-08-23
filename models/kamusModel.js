@@ -57,12 +57,20 @@ export const searchWord = (word, result) => {
     } else {
       result(null, results);
     }
-
-    // if (err) {
-    //   console.log(err);
-    //   result(err, { message: "data not founnd" });
-    // } else {
-    //   result(null, results);
-    // }
   });
+};
+
+export const postKamusDb = (records, result) => {
+  db.query(
+    "INSERT INTO kamus_manual (kata, keterangan) VALUES ?",
+    [records.map((record) => [record.kata, record.keterangan])],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
 };

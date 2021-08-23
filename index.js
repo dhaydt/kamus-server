@@ -4,7 +4,7 @@ import express from "express";
 import cors from "cors";
 // import routes
 import Router from "./routes/routes.js";
-import bodyParser from "body-parser";
+import bodyParser from "./node_modules/body-parser/index.js";
 
 // init express
 
