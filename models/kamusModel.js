@@ -3,7 +3,7 @@ import db from "../config/db.js";
 
 // Get All Products
 export const getKamus = (result) => {
-  db.query("SELECT * FROM kamus", (err, results) => {
+  db.query("SELECT _id, kata, keterangan FROM kamus", (err, results) => {
     if (err) {
       console.log(err);
       result(err, null);
