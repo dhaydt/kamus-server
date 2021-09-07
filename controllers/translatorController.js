@@ -3,6 +3,8 @@ import {
   cariIndDb,
   getEngDb,
   getIndDb,
+  getPopEngInDb,
+  getPopInEngDb,
 } from "../models/translatorModel.js";
 
 export const getInd = (req, res) => {
@@ -15,8 +17,28 @@ export const getInd = (req, res) => {
   });
 };
 
+export const getPopEngIn = (req, res) => {
+  getPopEngInDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
 export const getEng = (req, res) => {
   getEngDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const getPopInEng = (req, res) => {
+  getPopInEngDb((err, hasil) => {
     if (err) {
       res.send(err);
     } else {

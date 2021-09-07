@@ -2,7 +2,7 @@ import db from "../config/db.js";
 
 //random
 export const getNamaDb = (res) => {
-  db.query("SELECT * FROM nama ORDER BY RAND() LIMIT 50", (err, hasil) => {
+  db.query("SELECT * FROM nama ORDER BY RAND() LIMIT 5", (err, hasil) => {
     if (err) {
       console.log(err);
       res(err, null);
@@ -10,6 +10,19 @@ export const getNamaDb = (res) => {
       res(null, hasil);
     }
   });
+};
+
+export const getPopNamaDb = (res) => {
+  db.query(
+    "SELECT id, judul_nama, view FROM nama ORDER BY view DESC LIMIT 10",
+    (err, result) => {
+      if (err) {
+        res(err, null);
+      } else {
+        res(null, result);
+      }
+    }
+  );
 };
 
 export const getNamaAllDb = (res) => {
@@ -28,9 +41,37 @@ export const cariNamaDb = (nama, res) => {
     if (err) {
       res(err, null);
     } else {
-      res(null, hasil);
+      getRelatedEngIn(nama, (err, related) => {
+        getNamaDb((err, random) => {
+          res(null, { nama: hasil, related: related, random: random });
+          postView(nama);
+        });
+      });
     }
   });
+};
+
+const getRelatedEngIn = (nama, result) => {
+  const data = "%" + nama + "%";
+  db.query(
+    `SELECT id, judul_artikel, isi_artikel FROM en_id WHERE judul_artikel LIKE ? LIMIT 5`,
+    [data],
+    (err, related) => {
+      if (err) {
+        console.log(err);
+        // result(err);
+      } else {
+        // console.log(hasil);
+        result(null, related);
+      }
+    }
+  );
+};
+
+const postView = (nama, result) => {
+  db.query(`UPDATE nama SET view = view+1 WHERE judul_nama = ? LIMIT 1`, [
+    nama,
+  ]);
 };
 
 export const postNamaDb = (artiNama, res) => {

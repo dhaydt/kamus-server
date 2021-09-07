@@ -5,15 +5,20 @@ import {
   cariInd,
   getEng,
   getInd,
+  getPopEngIn,
+  getPopInEng,
 } from "../controllers/translatorController.js";
 import {
   cariGlos,
   getGlossarium,
+  getPopGlos,
   postGlos,
 } from "../controllers/glossariumController.js";
 import {
   createKamus,
   destroyKamus,
+  getGlobalRandom,
+  getPop,
   postKamusRow,
   search,
   showKamus,
@@ -23,6 +28,7 @@ import {
   cariNama,
   getNama,
   getNamaAll,
+  getPopNama,
   postNama,
 } from "../controllers/namaController.js";
 import { getReport, postReport } from "../controllers/reportController.js";
@@ -148,8 +154,12 @@ router.post("/login", (req, res, next) => {
     }
   );
 });
+// Global
+router.get("/random", getGlobalRandom);
+
 // KBBI
 router.get("/kamus", showKamus);
+router.get("/kamus/pop", getPop);
 router.post("/kamus", createKamus);
 router.post("/postkamus", postKamusRow);
 router.put("/kamus/:id", updateKamus);
@@ -158,18 +168,22 @@ router.get("/find/:kata", search);
 
 // Glosarium
 router.get("/glossarium", getGlossarium);
+router.get("/istilah/pop", getPopGlos);
 router.post("/postGlos", postGlos);
 router.get("/findGlos/:kata", cariGlos);
 
 // Arti nama
 router.get("/nama", getNama);
+router.get("/nama/pop", getPopNama);
 router.get("/allNama", getNamaAll);
 router.get("/findNama/:nama", cariNama);
 router.post("/postNama", postNama);
 
 // Translator
 router.get("/kamusInd", getInd);
+router.get("/engin/pop", getPopEngIn);
 router.get("/translateInd/:kata", cariEng);
+router.get("/ineng/pop", getPopInEng);
 router.get("/kamusEng", getEng);
 router.get("/translateEng/:kata", cariInd);
 

@@ -2,11 +2,22 @@ import {
   cariNamaDb,
   getNamaAllDb,
   getNamaDb,
+  getPopNamaDb,
   postNamaDb,
 } from "../models/namaModel.js";
 
 export const getNama = (req, res) => {
   getNamaDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const getPopNama = (req, res) => {
+  getPopNamaDb((err, hasil) => {
     if (err) {
       res.send(err);
     } else {

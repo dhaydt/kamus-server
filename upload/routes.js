@@ -95,7 +95,7 @@ export const getLastId = function (req, res) {
 };
 
 export const getSecondId = function (req, res) {
-  var sql = "SELECT * FROM adv ORDER BY id DESC LIMIT 1,1";
+  var sql = "SELECT * FROM adv ORDER BY id DESC LIMIT 10";
 
   db.query(sql, function (err, result) {
     console.log(result);

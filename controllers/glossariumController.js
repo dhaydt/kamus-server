@@ -1,11 +1,22 @@
 import {
   cariGlosDb,
   getGlossariumDb,
+  getPopIstilahDb,
   postGlosDb,
 } from "../models/glossariumModel.js";
 
 export const getGlossarium = (req, res) => {
   getGlossariumDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const getPopGlos = (req, res) => {
+  getPopIstilahDb((err, hasil) => {
     if (err) {
       res.send(err);
     } else {

@@ -1,15 +1,39 @@
 import {
   delKamus,
+  getGlobalDB,
   getKamus,
+  getPopDb,
   postKamus,
   postKamusDb,
   putKamus,
   searchWord,
 } from "../models/kamusModel.js";
 
+// Get global
+
+export const getGlobalRandom = (req, res) => {
+  getGlobalDB((err, global) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(global);
+    }
+  });
+};
+
 // Get All Products
 export const showKamus = (req, res) => {
   getKamus((err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const getPop = (req, res) => {
+  getPopDb((err, results) => {
     if (err) {
       res.send(err);
     } else {
