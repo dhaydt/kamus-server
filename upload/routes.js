@@ -4,46 +4,81 @@ export const index = function (req, res) {
   var message = "";
   if (req.method == "POST") {
     var post = req.body;
-    console.log(req);
 
     var title = post.title;
-    var details = post.detail;
+    var posisi = post.posisi;
+    var tipe = post.tipe;
+    var code = post.code;
+    var end_date = post.end_date;
+    var start_date = post.start_date;
 
     if (!req.files) {
-      return res.status(400).send;
-      ("No Image Found");
-    }
+      var sql =
+        "INSERT INTO `adv` (`title`,`posisi`,`tipe`, `code`, `start_date`, `end_date`) VALUES ('" +
+        title +
+        "','" +
+        posisi +
+        "','" +
+        tipe +
+        "','" +
+        code +
+        "','" +
+        start_date +
+        "','" +
+        end_date +
+        "')";
 
-    var file = req.files.images;
-    var images = file.name;
-
-    if (
-      file.mimetype == "image/jpeg" ||
-      file.mimetype == "image/jpg" ||
-      file.mimetype == "image/png" ||
-      file.mimetype == "image/gif"
-    ) {
-      file.mv("public/images/client/" + file.name, function (err) {
+      db.query(sql, (err, result) => {
         if (err) {
-          return res.status(500).send(err);
-        }
-        var sql =
-          "INSERT INTO `adv` (`title`,`images`,`details`) VALUES ('" +
-          title +
-          "','" +
-          images +
-          "','" +
-          details +
-          "')";
-
-        db.query(sql, function (err, result) {
+          console.log(err);
+          result(err, null);
+        } else {
+          // result(null, results);
+          console.log("hasil", result);
           res.send(result);
-        });
+        }
       });
     } else {
-      message =
-        "This format not allowed, allowed format is .png, .jpeg, .jpg, .gif";
-      res.send({ message: message });
+      var file = req.files.images;
+      var images = file.name;
+
+      if (
+        file.mimetype == "image/jpeg" ||
+        file.mimetype == "image/jpg" ||
+        file.mimetype == "image/png" ||
+        file.mimetype == "image/gif"
+      ) {
+        file.mv("public/images/client/" + file.name, function (err) {
+          if (err) {
+            return res.status(500).send(err);
+          }
+          var sql =
+            "INSERT INTO `adv` (`title`,`images`,`posisi`, `tipe`) VALUES ('" +
+            title +
+            "','" +
+            images +
+            "','" +
+            tipe +
+            "','" +
+            posisi +
+            "')";
+
+          db.query(sql, (err, result) => {
+            if (err) {
+              console.log(err);
+              result(err, null);
+            } else {
+              // result(null, results);
+              console.log("hasil", result);
+              res.send(result);
+            }
+          });
+        });
+      } else {
+        message =
+          "This format not allowed, allowed format is .png, .jpeg, .jpg, .gif";
+        res.send({ message: message });
+      }
     }
   } else {
     res.send("Success");
@@ -95,9 +130,9 @@ export const getLastId = function (req, res) {
 };
 
 export const getSecondId = function (req, res) {
-  var sql = "SELECT * FROM adv ORDER BY id DESC LIMIT 10";
+  var sql = "SELECT * FROM adv WHERE tipe = ? ORDER BY id DESC  LIMIT 10";
 
-  db.query(sql, function (err, result) {
+  db.query(sql, ["image"], function (err, result) {
     console.log(result);
     res.send(result);
   });

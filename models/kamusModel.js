@@ -226,3 +226,30 @@ export const delKamus = (id, result) => {
     }
   });
 };
+
+// Kamus Cadangan
+
+export const getKamusCadanganDb = (result) => {
+  db.query(
+    "SELECT _id, kata, keterangan, view FROM kamus_manual",
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
+export const delKamusCadangan = (id, result) => {
+  db.query("DELETE FROM kamus_manual WHERE _id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};

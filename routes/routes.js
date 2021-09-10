@@ -11,17 +11,22 @@ import {
 import {
   cariGlos,
   getGlossarium,
+  getGlossariumCadangan,
   getPopGlos,
+  hapusIstilahCadangan,
+  hapusIstilahUtama,
   postGlos,
 } from "../controllers/glossariumController.js";
 import {
   createKamus,
   destroyKamus,
+  destroyKamusCadangan,
   getGlobalRandom,
   getPop,
   postKamusRow,
   search,
   showKamus,
+  showKamusCadangan,
   updateKamus,
 } from "../controllers/kamusController.js";
 import {
@@ -159,18 +164,23 @@ router.get("/random", getGlobalRandom);
 
 // KBBI
 router.get("/kamus", showKamus);
+router.get("/kamusCadangan", showKamusCadangan);
 router.get("/kamus/pop", getPop);
 router.post("/kamus", createKamus);
 router.post("/postkamus", postKamusRow);
 router.put("/kamus/:id", updateKamus);
 router.delete("/kamus/:id", destroyKamus);
+router.delete("/kamusCadangan/:id", destroyKamusCadangan);
 router.get("/find/:kata", search);
 
 // Glosarium
 router.get("/glossarium", getGlossarium);
+router.get("/glossariumCadangan", getGlossariumCadangan);
 router.get("/istilah/pop", getPopGlos);
 router.post("/postGlos", postGlos);
 router.get("/findGlos/:kata", cariGlos);
+router.delete("/glossarium/:id", hapusIstilahUtama);
+router.delete("/glossariumCadangan/:id", hapusIstilahCadangan);
 
 // Arti nama
 router.get("/nama", getNama);

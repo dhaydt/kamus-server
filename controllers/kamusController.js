@@ -1,7 +1,9 @@
 import {
   delKamus,
+  delKamusCadangan,
   getGlobalDB,
   getKamus,
+  getKamusCadanganDb,
   getPopDb,
   postKamus,
   postKamusDb,
@@ -100,6 +102,29 @@ export const search = (req, res) => {
       res.send(err);
     } else {
       console.log(results);
+      res.json(results);
+    }
+  });
+};
+
+// Kamus cadangan
+
+export const showKamusCadangan = (req, res) => {
+  getKamusCadanganDb((err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const destroyKamusCadangan = (req, res) => {
+  const id = req.params.id;
+  delKamusCadangan(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
       res.json(results);
     }
   });

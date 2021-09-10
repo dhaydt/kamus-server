@@ -1,7 +1,10 @@
 import {
   cariGlosDb,
+  getGlossariumCadanganDb,
   getGlossariumDb,
   getPopIstilahDb,
+  hapusIstilah,
+  hapusIstilahManual,
   postGlosDb,
 } from "../models/glossariumModel.js";
 
@@ -46,6 +49,40 @@ export const postGlos = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const hapusIstilahUtama = (req, res) => {
+  const id = req.params.id;
+  hapusIstilah(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+// istilah tambahan
+
+export const getGlossariumCadangan = (req, res) => {
+  getGlossariumCadanganDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const hapusIstilahCadangan = (req, res) => {
+  const id = req.params.id;
+  hapusIstilahManual(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
     }
   });
 };

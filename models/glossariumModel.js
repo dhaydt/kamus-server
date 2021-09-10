@@ -105,3 +105,45 @@ export const postGlosDb = (glosarium, res) => {
     }
   );
 };
+
+export const hapusIstilah = (id, result) => {
+  db.query("DELETE FROM istilah WHERE id_glos = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+// Glosarium Tambahan
+
+export const getGlossariumCadanganDb = (res) => {
+  db.query(
+    "SELECT id_glos, judul_glos, bid_glos, isi_glos, view FROM istilah_manual",
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const hapusIstilahManual = (id, result) => {
+  db.query(
+    "DELETE FROM istilah_manual WHERE id_glos = ?",
+    [id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
