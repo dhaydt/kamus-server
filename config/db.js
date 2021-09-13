@@ -4,8 +4,8 @@ import mysql from "mysql2";
 const db = mysql.createConnection({
   host: "localhost",
   // user: "root",
-  user: "admin",
   // password: "11111",
+  user: "admin",
   password: "",
   database: "kamusdb",
 });

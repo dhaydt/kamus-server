@@ -1,6 +1,9 @@
 import {
   cariNamaDb,
+  delNama,
+  delNamaCadangan,
   getNamaAllDb,
+  getNamaCadanganDb,
   getNamaDb,
   getPopNamaDb,
   postNamaDb,
@@ -58,6 +61,41 @@ export const postNama = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const destroyNama = (req, res) => {
+  const id = req.params.id;
+  delNama(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+// Nama cadangan
+
+export const getNamaCadangan = (req, res) => {
+  getNamaCadanganDb((err, hasil) => {
+    if (err) {
+      console.log(err);
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const destroyNamaCadangan = (req, res) => {
+  const id = req.params.id;
+  delNamaCadangan(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
     }
   });
 };

@@ -155,3 +155,99 @@ const postViewEng = (kata, result) => {
     kata,
   ]);
 };
+
+export const delKamusEng = (id, result) => {
+  db.query("DELETE FROM en_id WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const delKamInd = (id, result) => {
+  db.query("DELETE FROM id_eng WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+// post cadangan
+
+export const postEnginDb = (enIng, res) => {
+  db.query(
+    "INSERT INTO en_id_manual (judul_artikel, isi_artikel) VALUES ?",
+    [enIng.map((kata) => [kata.judul_artikel, kata.isi_artikel])],
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const getCadanganEngDb = (res) => {
+  db.query("SELECT * FROM en_id_manual", (err, hasil) => {
+    if (err) {
+      res(err, null);
+    } else {
+      res(null, hasil);
+    }
+  });
+};
+
+export const delKataEngin = (id, result) => {
+  db.query("DELETE FROM en_id_manual WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const postInEngDb = (idEng, res) => {
+  db.query(
+    "INSERT INTO id_eng_manual (judul_artikel, isi_artikel) VALUES ?",
+    [idEng.map((kata) => [kata.judul_artikel, kata.isi_artikel])],
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const getCadanganIndDb = (res) => {
+  db.query("SELECT * FROM id_eng_manual", (err, hasil) => {
+    if (err) {
+      res(err, null);
+    } else {
+      res(null, hasil);
+    }
+  });
+};
+
+export const delKataIdeng = (id, result) => {
+  db.query("DELETE FROM id_eng_manual WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};

@@ -13,3 +13,25 @@ export const getUserDb = (result) => {
     }
   );
 };
+
+export const delUser = (id, result) => {
+  db.query("DELETE FROM users WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+export const delAdv = (id, result) => {
+  db.query("DELETE FROM adv WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};

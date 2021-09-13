@@ -53,7 +53,7 @@ export const index = function (req, res) {
             return res.status(500).send(err);
           }
           var sql =
-            "INSERT INTO `adv` (`title`,`images`,`posisi`, `tipe`) VALUES ('" +
+            "INSERT INTO `adv` (`title`,`images`,`tipe`, `posisi`) VALUES ('" +
             title +
             "','" +
             images +

@@ -4,9 +4,17 @@ import {
   cariEng,
   cariInd,
   getEng,
+  getEngCad,
   getInd,
+  getIndCad,
   getPopEngIn,
   getPopInEng,
+  hapusEnginCadangan,
+  hapusIdEngCadangan,
+  hapusKamInd,
+  hapusKamusEng,
+  postEngIn,
+  postIdEng,
 } from "../controllers/translatorController.js";
 import {
   cariGlos,
@@ -31,12 +39,19 @@ import {
 } from "../controllers/kamusController.js";
 import {
   cariNama,
+  destroyNama,
+  destroyNamaCadangan,
   getNama,
   getNamaAll,
+  getNamaCadangan,
   getPopNama,
   postNama,
 } from "../controllers/namaController.js";
-import { getReport, postReport } from "../controllers/reportController.js";
+import {
+  destroyReport,
+  getReport,
+  postReport,
+} from "../controllers/reportController.js";
 
 // import function from controller
 
@@ -53,12 +68,17 @@ import db from "../config/db.js";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { getUser } from "../controllers/userController.js";
+import {
+  destroyAdv,
+  destroyUser,
+  getUser,
+} from "../controllers/userController.js";
 // init express rout
 const router = express.Router();
 
 // Auth
 router.get("/getUser", getUser);
+router.delete("/getUser/:id", destroyUser);
 
 router.post("/register", (req, res, next) => {
   db.query(
@@ -186,25 +206,41 @@ router.delete("/glossariumCadangan/:id", hapusIstilahCadangan);
 router.get("/nama", getNama);
 router.get("/nama/pop", getPopNama);
 router.get("/allNama", getNamaAll);
+router.get("/allNamaCadangan", getNamaCadangan);
 router.get("/findNama/:nama", cariNama);
 router.post("/postNama", postNama);
+router.delete("/allNama/:id", destroyNama);
+router.delete("/allNamaCadangan/:id", destroyNamaCadangan);
 
 // Translator
+// eng-in
 router.get("/kamusInd", getInd);
-router.get("/engin/pop", getPopEngIn);
+router.get("/engInCadangan", getEngCad);
+router.post("/postEng", postEngIn);
 router.get("/translateInd/:kata", cariEng);
+router.get("/engin/pop", getPopEngIn);
+router.delete("/engInCadangan/:id", hapusEnginCadangan);
+router.delete("/kamusInd/:id", hapusKamusEng);
+
+// id-eng
 router.get("/ineng/pop", getPopInEng);
 router.get("/kamusEng", getEng);
 router.get("/translateEng/:kata", cariInd);
+router.delete("/kamusEng/:id", hapusKamInd);
+router.delete("/kamusEngCad/:id", hapusIdEngCadangan);
+router.get("/kamusEngCad/", getIndCad);
+router.post("/postInd", postIdEng);
 
 // report
 router.get("/getReport", getReport);
+router.delete("/getReport/:id", destroyReport);
 router.post("/report", postReport);
 
 // adv
 router.get("/getAdv/:id", getImg);
 router.post("/postAdv", index);
 router.get("/getAdv", profile);
+router.delete("/getAdv/:id", destroyAdv);
 router.get("/getLastAdv", getLastId);
 router.get("/getSecondAdv", getSecondId);
 router.get("/getThirdAdv", getThirdId);

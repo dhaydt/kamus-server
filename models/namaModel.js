@@ -96,3 +96,41 @@ export const postNamaDb = (artiNama, res) => {
     }
   );
 };
+
+export const delNama = (id, result) => {
+  db.query("DELETE FROM nama WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
+
+// Nama Cadangan
+
+export const getNamaCadanganDb = (res) => {
+  db.query(
+    "SELECT id, judul_nama, isi_nama, kelamin_nama, view  FROM nama_manual ORDER BY id",
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const delNamaCadangan = (id, result) => {
+  db.query("DELETE FROM nama_manual WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};

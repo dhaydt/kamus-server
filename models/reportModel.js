@@ -20,3 +20,14 @@ export const postReportDb = (data, res) => {
     }
   });
 };
+
+export const hapusReport = (id, result) => {
+  db.query("DELETE FROM report WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      result(err, null);
+    } else {
+      result(null, results);
+    }
+  });
+};
