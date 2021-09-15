@@ -48,8 +48,8 @@ export const getPopInEngDb = (res) => {
 
 export const cariIndDb = (kata, res) => {
   db.query(
-    "SELECT * FROM en_id WHERE judul_artikel = ?",
-    [kata],
+    "SELECT * FROM en_id WHERE judul_artikel = ? UNION ALL SELECT * FROM en_id_manual WHERE judul_artikel = ?",
+    [kata, kata],
     (err, hasil) => {
       if (err) {
         res(err, null);
@@ -99,12 +99,16 @@ const postViewInd = (kata, result) => {
   db.query(`UPDATE en_id SET view = view+1 WHERE judul_artikel = ? LIMIT 1`, [
     kata,
   ]);
+  db.query(
+    `UPDATE en_id_manual SET view = view+1 WHERE judul_artikel = ? LIMIT 1`,
+    [kata]
+  );
 };
 
 export const cariEngDb = (kata, res) => {
   db.query(
-    "SELECT * FROM id_eng WHERE judul_artikel = ?",
-    [kata],
+    "SELECT * FROM id_eng WHERE judul_artikel = ? UNION ALL SELECT * FROM id_eng_manual WHERE judul_artikel = ?",
+    [kata, kata],
     (err, hasil) => {
       if (err) {
         res(err, null);
@@ -154,6 +158,10 @@ const postViewEng = (kata, result) => {
   db.query(`UPDATE id_eng SET view = view+1 WHERE judul_artikel = ? LIMIT 1`, [
     kata,
   ]);
+  db.query(
+    `UPDATE id_eng_manual SET view = view+1 WHERE judul_artikel = ? LIMIT 1`,
+    [kata]
+  );
 };
 
 export const delKamusEng = (id, result) => {

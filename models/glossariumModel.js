@@ -29,8 +29,8 @@ export const getPopIstilahDb = (res) => {
 
 export const cariGlosDb = (kata, res) => {
   db.query(
-    "SELECT * FROM  istilah WHERE judul_glos = ?",
-    [kata],
+    "SELECT * FROM  istilah WHERE judul_glos = ? UNION ALL SELECT * FROM istilah_manual WHERE judul_glos = ?",
+    [kata, kata],
     (err, hasil) => {
       if (err) {
         res(err, null);
@@ -81,6 +81,10 @@ const postView = (kata, result) => {
   db.query(`UPDATE istilah SET view = view+1 WHERE judul_glos = ? LIMIT 1`, [
     kata,
   ]);
+  db.query(
+    `UPDATE istilah_manual SET view = view+1 WHERE judul_glos = ? LIMIT 1`,
+    [kata]
+  );
 };
 
 export const postGlosDb = (glosarium, res) => {

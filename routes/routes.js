@@ -122,7 +122,7 @@ router.delete("/allNama/:id", destroyNama);
 router.delete("/allNamaCadangan/:id", destroyNamaCadangan);
 
 // Translator
-// eng-in
+// in-eng
 router.get("/kamusInd", getInd);
 router.get("/engInCadangan", getEngCad);
 router.post("/postEng", postEngIn);
@@ -131,7 +131,7 @@ router.get("/engin/pop", getPopEngIn);
 router.delete("/engInCadangan/:id", hapusEnginCadangan);
 router.delete("/kamusInd/:id", hapusKamusEng);
 
-// id-eng
+// eng-in
 router.get("/ineng/pop", getPopInEng);
 router.get("/kamusEng", getEng);
 router.get("/translateEng/:kata", cariInd);

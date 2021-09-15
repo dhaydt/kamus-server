@@ -37,18 +37,22 @@ export const getNamaAllDb = (res) => {
 };
 
 export const cariNamaDb = (nama, res) => {
-  db.query("SELECT * FROM nama WHERE judul_nama = ?", [nama], (err, hasil) => {
-    if (err) {
-      res(err, null);
-    } else {
-      getRelatedEngIn(nama, (err, related) => {
-        getNamaDb((err, random) => {
-          res(null, { nama: hasil, related: related, random: random });
-          postView(nama);
+  db.query(
+    "SELECT id, judul_nama, kelamin_nama, asal_nama, isi_nama, view FROM nama WHERE judul_nama = ? UNION ALL SELECT id, judul_nama, kelamin_nama, asal_nama, isi_nama, view FROM nama_manual WHERE judul_nama = ?",
+    [nama, nama],
+    (err, hasil) => {
+      if (err) {
+        res(err, null);
+      } else {
+        getRelatedEngIn(nama, (err, related) => {
+          getNamaDb((err, random) => {
+            res(null, { nama: hasil, related: related, random: random });
+            postView(nama);
+          });
         });
-      });
+      }
     }
-  });
+  );
 };
 
 const getRelatedEngIn = (nama, result) => {
@@ -72,18 +76,21 @@ const postView = (nama, result) => {
   db.query(`UPDATE nama SET view = view+1 WHERE judul_nama = ? LIMIT 1`, [
     nama,
   ]);
+  db.query(
+    `UPDATE nama_manual SET view = view+1 WHERE judul_nama = ? LIMIT 1`,
+    [nama]
+  );
 };
 
 export const postNamaDb = (artiNama, res) => {
   db.query(
-    "INSERT INTO nama_manual (judul_nama, kelamin_nama, asal_nama, isi_nama, perfix_nama) VALUES ?",
+    "INSERT INTO nama_manual (judul_nama, kelamin_nama, asal_nama, isi_nama) VALUES ?",
     [
       artiNama.map((nama) => [
         nama.judul_nama,
         nama.kelamin_nama,
         nama.asal_nama,
         nama.isi_nama,
-        nama.perfix_nama,
       ]),
     ],
     (err, hasil) => {

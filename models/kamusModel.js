@@ -123,20 +123,40 @@ export const getKamus = (result) => {
 //   });
 // };
 
+// export const searchWord = (word, result) => {
+//   db.query("SELECT * FROM kamus WHERE kata = ?", [word], (err, results) => {
+//     if (results == null) {
+//       result(null, { message: "data not found" });
+//     } else {
+//       getRelatedInEng(word, (err, hasil) => {
+//         getRandom((err, random) => {
+//           console.log({ kbbi: results, related: hasil, random: random });
+//           result(null, { kbbi: results, related: hasil, random: random });
+//           postView(word);
+//         });
+//       });
+//     }
+//   });
+// };
+
 export const searchWord = (word, result) => {
-  db.query("SELECT * FROM kamus WHERE kata = ?", [word], (err, results) => {
-    if (results == null) {
-      result(null, { message: "data not found" });
-    } else {
-      getRelatedInEng(word, (err, hasil) => {
-        getRandom((err, random) => {
-          console.log({ kbbi: results, related: hasil, random: random });
-          result(null, { kbbi: results, related: hasil, random: random });
-          postView(word);
+  db.query(
+    "SELECT * FROM kamus WHERE kata = ? UNION ALL SELECT * FROM kamus_manual WHERE kata = ?",
+    [word, word],
+    (err, results) => {
+      if (results == null) {
+        result(null, { message: "data not found" });
+      } else {
+        getRelatedInEng(word, (err, hasil) => {
+          getRandom((err, random) => {
+            console.log({ kbbi: results, related: hasil, random: random });
+            result(null, { kbbi: results, related: hasil, random: random });
+            postView(word);
+          });
         });
-      });
+      }
     }
-  });
+  );
 };
 
 const getRandom = (res) => {
@@ -171,6 +191,9 @@ const getRelatedInEng = (word, result) => {
 
 const postView = (word, result) => {
   db.query(`UPDATE kamus SET view = view+1 WHERE kata = ? LIMIT 1`, [word]);
+  db.query(`UPDATE kamus_manual SET view = view+1 WHERE kata = ? LIMIT 1`, [
+    word,
+  ]);
 };
 
 export const getPopDb = (res) => {
