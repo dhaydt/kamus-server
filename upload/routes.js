@@ -9,6 +9,7 @@ export const index = function (req, res) {
     var posisi = post.posisi;
     var tipe = post.tipe;
     var code = post.code;
+    var url = post.url;
     var end_date = post.end_date;
     var start_date = post.start_date;
 
@@ -53,14 +54,20 @@ export const index = function (req, res) {
             return res.status(500).send(err);
           }
           var sql =
-            "INSERT INTO `adv` (`title`,`images`,`tipe`, `posisi`) VALUES ('" +
+            "INSERT INTO `adv` (`title`,`images`, `url`, `tipe`, `posisi`, `start_date`, `end_date`) VALUES ('" +
             title +
             "','" +
             images +
             "','" +
+            url +
+            "','" +
             tipe +
             "','" +
             posisi +
+            "','" +
+            start_date +
+            "','" +
+            end_date +
             "')";
 
           db.query(sql, (err, result) => {
@@ -142,6 +149,88 @@ export const getThirdId = function (req, res) {
   var sql = "SELECT * FROM adv ORDER BY id DESC LIMIT 2,1";
 
   db.query(sql, function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+// get iklan atas judul
+
+export const getAtasJudul = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "atas_judul"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getBawahJudul = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "bawah_judul"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getAtasRelated = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "atas_related"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getAtasLainnya = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "atas_lainnya"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getAtasShared = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "atas_shared"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getSideAtas = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "side_atas"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getSideTengah = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "side_tengah"], function (err, result) {
+    console.log(result);
+    res.send(result);
+  });
+};
+
+export const getSideBawah = function (req, res) {
+  var sql =
+    "SELECT * FROM adv WHERE tipe = ? AND posisi = ? ORDER BY id DESC  LIMIT 5";
+
+  db.query(sql, ["image", "side_bawah"], function (err, result) {
     console.log(result);
     res.send(result);
   });

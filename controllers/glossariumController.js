@@ -2,9 +2,11 @@ import {
   cariGlosDb,
   getGlossariumCadanganDb,
   getGlossariumDb,
+  getIstilahCadanganDb,
   getPopIstilahDb,
   hapusIstilah,
   hapusIstilahManual,
+  postGlos2,
   postGlosDb,
 } from "../models/glossariumModel.js";
 
@@ -40,6 +42,19 @@ export const cariGlos = (req, res) => {
   });
 };
 
+export const postGlosarium2 = (req, res) => {
+  const data = req.body.data;
+  var stringData = JSON.stringify(data);
+  var glosarium = JSON.parse(stringData);
+  postGlos2(glosarium, (err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
 export const postGlos = (req, res) => {
   const data = req.body.data;
   var stringData = JSON.stringify(data);
@@ -68,6 +83,16 @@ export const hapusIstilahUtama = (req, res) => {
 
 export const getGlossariumCadangan = (req, res) => {
   getGlossariumCadanganDb((err, hasil) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(hasil);
+    }
+  });
+};
+
+export const getIstilahCadangan = (req, res) => {
+  getIstilahCadanganDb((err, hasil) => {
     if (err) {
       res.send(err);
     } else {

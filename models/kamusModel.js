@@ -112,16 +112,16 @@ export const getKamus = (result) => {
   });
 };
 
-export const postKamus = (data, result) => {
-  db.query("INSERT INTO kamus SET ?", [data], (err, results) => {
-    if (err) {
-      console.log(err);
-      result(err, null);
-    } else {
-      result(null, results);
-    }
-  });
-};
+// export const postKamus = (data, result) => {
+//   db.query("INSERT INTO kamus SET ?", [data], (err, results) => {
+//     if (err) {
+//       console.log(err);
+//       result(err, null);
+//     } else {
+//       result(null, results);
+//     }
+//   });
+// };
 
 export const searchWord = (word, result) => {
   db.query("SELECT * FROM kamus WHERE kata = ?", [word], (err, results) => {
@@ -188,8 +188,8 @@ export const getPopDb = (res) => {
 
 export const postKamusDb = (records, result) => {
   db.query(
-    "INSERT INTO kamus_manual (kata, keterangan) VALUES ?",
-    [records.map((record) => [record.kata, record.keterangan])],
+    "INSERT INTO kamus_manual (kata, keterangan, tipe) VALUES ?",
+    [records.map((record) => [record.kata, record.keterangan, record.tipe])],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -231,7 +231,7 @@ export const delKamus = (id, result) => {
 
 export const getKamusCadanganDb = (result) => {
   db.query(
-    "SELECT _id, kata, keterangan, view FROM kamus_manual",
+    "SELECT _id, kata, keterangan, tipe, view FROM kamus_manual",
     (err, results) => {
       if (err) {
         console.log(err);

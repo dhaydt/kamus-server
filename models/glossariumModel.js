@@ -85,14 +85,33 @@ const postView = (kata, result) => {
 
 export const postGlosDb = (glosarium, res) => {
   db.query(
-    "INSERT INTO istilah_manual (judul_glos, bid_glos, isi_glos, judul_seo, perfix_glos) VALUES ?",
+    "INSERT INTO istilah_manual (judul_glos, bid_glos, isi_glos) VALUES ?",
     [
       glosarium.map((glos) => [
         glos.judul_glos,
-        glos.bid_glos,
+        JSON.stringify(glos.bid_glos),
         glos.isi_glos,
-        glos.judul_seo,
-        glos.perfix_glos,
+      ]),
+    ],
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const postGlos2 = (glosarium, res) => {
+  db.query(
+    "INSERT INTO istilah_manual2 (judul_glos, bid_glos, isi_glos) VALUES ?",
+    [
+      glosarium.map((glos) => [
+        glos.judul_glos,
+        glos.bid_glos.map((i) => [i]),
+        glos.isi_glos,
       ]),
     ],
     (err, hasil) => {
@@ -121,7 +140,21 @@ export const hapusIstilah = (id, result) => {
 
 export const getGlossariumCadanganDb = (res) => {
   db.query(
-    "SELECT id_glos, judul_glos, bid_glos, isi_glos, view FROM istilah_manual",
+    "SELECT id_glos, judul_glos, bid_glos, isi_glos, bahasa, view FROM istilah_manual",
+    (err, hasil) => {
+      if (err) {
+        console.log(err);
+        res(err, null);
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const getIstilahCadanganDb = (res) => {
+  db.query(
+    "SELECT id_glos, judul_glos, bid_glos, isi_glos, bahasa, view FROM istilah_manual2",
     (err, hasil) => {
       if (err) {
         console.log(err);

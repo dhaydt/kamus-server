@@ -20,10 +20,12 @@ import {
   cariGlos,
   getGlossarium,
   getGlossariumCadangan,
+  getIstilahCadangan,
   getPopGlos,
   hapusIstilahCadangan,
   hapusIstilahUtama,
   postGlos,
+  postGlosarium2,
 } from "../controllers/glossariumController.js";
 import {
   createKamus,
@@ -57,9 +59,17 @@ import {
 
 // import Uploaded Images
 import {
+  getAtasJudul,
+  getAtasLainnya,
+  getAtasRelated,
+  getAtasShared,
+  getBawahJudul,
   getImg,
   getLastId,
   getSecondId,
+  getSideAtas,
+  getSideBawah,
+  getSideTengah,
   getThirdId,
   index,
   profile,
@@ -75,6 +85,85 @@ import {
 } from "../controllers/userController.js";
 // init express rout
 const router = express.Router();
+
+// Global
+router.get("/random", getGlobalRandom);
+
+// KBBI
+router.get("/kamus", showKamus);
+router.get("/kamusCadangan", showKamusCadangan);
+router.get("/kamus/pop", getPop);
+router.post("/kamus", createKamus);
+router.post("/postkamus", postKamusRow);
+router.put("/kamus/:id", updateKamus);
+router.delete("/kamus/:id", destroyKamus);
+router.delete("/kamusCadangan/:id", destroyKamusCadangan);
+router.get("/find/:kata", search);
+
+// Glosarium
+router.get("/glossarium", getGlossarium);
+router.get("/glossariumCadangan", getGlossariumCadangan);
+router.get("/glossariumCadangan2", getIstilahCadangan);
+router.get("/istilah/pop", getPopGlos);
+router.post("/postGlos", postGlos);
+router.post("/postGlos2", postGlosarium2);
+router.get("/findGlos/:kata", cariGlos);
+router.delete("/glossarium/:id", hapusIstilahUtama);
+router.delete("/glossariumCadangan/:id", hapusIstilahCadangan);
+
+// Arti nama
+router.get("/nama", getNama);
+router.get("/nama/pop", getPopNama);
+router.get("/allNama", getNamaAll);
+router.get("/allNamaCadangan", getNamaCadangan);
+router.get("/findNama/:nama", cariNama);
+router.post("/postNama", postNama);
+router.delete("/allNama/:id", destroyNama);
+router.delete("/allNamaCadangan/:id", destroyNamaCadangan);
+
+// Translator
+// eng-in
+router.get("/kamusInd", getInd);
+router.get("/engInCadangan", getEngCad);
+router.post("/postEng", postEngIn);
+router.get("/translateInd/:kata", cariEng);
+router.get("/engin/pop", getPopEngIn);
+router.delete("/engInCadangan/:id", hapusEnginCadangan);
+router.delete("/kamusInd/:id", hapusKamusEng);
+
+// id-eng
+router.get("/ineng/pop", getPopInEng);
+router.get("/kamusEng", getEng);
+router.get("/translateEng/:kata", cariInd);
+router.delete("/kamusEng/:id", hapusKamInd);
+router.delete("/kamusEngCad/:id", hapusIdEngCadangan);
+router.get("/kamusEngCad/", getIndCad);
+router.post("/postInd", postIdEng);
+
+// report
+router.get("/getReport", getReport);
+router.delete("/getReport/:id", destroyReport);
+router.post("/report", postReport);
+
+// adv
+router.get("/getAdv/:id", getImg);
+router.post("/postAdv", index);
+router.get("/getAdv", profile);
+router.delete("/getAdv/:id", destroyAdv);
+router.get("/getLastAdv", getLastId);
+router.get("/getSecondAdv", getSecondId);
+router.get("/getThirdAdv", getThirdId);
+
+// Adv main
+router.get("/getAtasJudul", getAtasJudul);
+router.get("/getBawahJudul", getBawahJudul);
+router.get("/getAtasRelated", getAtasRelated);
+router.get("/getAtasLainnya", getAtasLainnya);
+router.get("/getAtasShared", getAtasShared);
+//Adv side
+router.get("/getSideAtas", getSideAtas);
+router.get("/getSideTengah", getSideTengah);
+router.get("/getSideBawah", getSideBawah);
 
 // Auth
 router.get("/getUser", getUser);
@@ -179,72 +268,6 @@ router.post("/login", (req, res, next) => {
     }
   );
 });
-// Global
-router.get("/random", getGlobalRandom);
-
-// KBBI
-router.get("/kamus", showKamus);
-router.get("/kamusCadangan", showKamusCadangan);
-router.get("/kamus/pop", getPop);
-router.post("/kamus", createKamus);
-router.post("/postkamus", postKamusRow);
-router.put("/kamus/:id", updateKamus);
-router.delete("/kamus/:id", destroyKamus);
-router.delete("/kamusCadangan/:id", destroyKamusCadangan);
-router.get("/find/:kata", search);
-
-// Glosarium
-router.get("/glossarium", getGlossarium);
-router.get("/glossariumCadangan", getGlossariumCadangan);
-router.get("/istilah/pop", getPopGlos);
-router.post("/postGlos", postGlos);
-router.get("/findGlos/:kata", cariGlos);
-router.delete("/glossarium/:id", hapusIstilahUtama);
-router.delete("/glossariumCadangan/:id", hapusIstilahCadangan);
-
-// Arti nama
-router.get("/nama", getNama);
-router.get("/nama/pop", getPopNama);
-router.get("/allNama", getNamaAll);
-router.get("/allNamaCadangan", getNamaCadangan);
-router.get("/findNama/:nama", cariNama);
-router.post("/postNama", postNama);
-router.delete("/allNama/:id", destroyNama);
-router.delete("/allNamaCadangan/:id", destroyNamaCadangan);
-
-// Translator
-// eng-in
-router.get("/kamusInd", getInd);
-router.get("/engInCadangan", getEngCad);
-router.post("/postEng", postEngIn);
-router.get("/translateInd/:kata", cariEng);
-router.get("/engin/pop", getPopEngIn);
-router.delete("/engInCadangan/:id", hapusEnginCadangan);
-router.delete("/kamusInd/:id", hapusKamusEng);
-
-// id-eng
-router.get("/ineng/pop", getPopInEng);
-router.get("/kamusEng", getEng);
-router.get("/translateEng/:kata", cariInd);
-router.delete("/kamusEng/:id", hapusKamInd);
-router.delete("/kamusEngCad/:id", hapusIdEngCadangan);
-router.get("/kamusEngCad/", getIndCad);
-router.post("/postInd", postIdEng);
-
-// report
-router.get("/getReport", getReport);
-router.delete("/getReport/:id", destroyReport);
-router.post("/report", postReport);
-
-// adv
-router.get("/getAdv/:id", getImg);
-router.post("/postAdv", index);
-router.get("/getAdv", profile);
-router.delete("/getAdv/:id", destroyAdv);
-router.get("/getLastAdv", getLastId);
-router.get("/getSecondAdv", getSecondId);
-router.get("/getThirdAdv", getThirdId);
-
 // router.post("/kamuss", (req, res) => {
 //   //
 // });

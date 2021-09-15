@@ -5,7 +5,6 @@ import {
   getKamus,
   getKamusCadanganDb,
   getPopDb,
-  postKamus,
   postKamusDb,
   putKamus,
   searchWord,
