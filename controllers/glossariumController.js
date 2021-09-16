@@ -6,6 +6,7 @@ import {
   getPopIstilahDb,
   hapusIstilah,
   hapusIstilahManual,
+  hapusManual2,
   postGlos2,
   postGlosDb,
 } from "../models/glossariumModel.js";
@@ -104,6 +105,17 @@ export const getIstilahCadangan = (req, res) => {
 export const hapusIstilahCadangan = (req, res) => {
   const id = req.params.id;
   hapusIstilahManual(id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const hapusIsManual2 = (req, res) => {
+  const id = req.params.id;
+  hapusManual2(id, (err, results) => {
     if (err) {
       res.send(err);
     } else {

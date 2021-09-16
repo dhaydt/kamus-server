@@ -22,6 +22,7 @@ import {
   getGlossariumCadangan,
   getIstilahCadangan,
   getPopGlos,
+  hapusIsManual2,
   hapusIstilahCadangan,
   hapusIstilahUtama,
   postGlos,
@@ -110,6 +111,7 @@ router.post("/postGlos2", postGlosarium2);
 router.get("/findGlos/:kata", cariGlos);
 router.delete("/glossarium/:id", hapusIstilahUtama);
 router.delete("/glossariumCadangan/:id", hapusIstilahCadangan);
+router.delete("/glossariumCadangan2/:id", hapusIsManual2);
 
 // Arti nama
 router.get("/nama", getNama);

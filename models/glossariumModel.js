@@ -110,12 +110,14 @@ export const postGlosDb = (glosarium, res) => {
 
 export const postGlos2 = (glosarium, res) => {
   db.query(
-    "INSERT INTO istilah_manual2 (judul_glos, bid_glos, isi_glos) VALUES ?",
+    "INSERT INTO istilah_manual2 (judul_eng_glos, judul_ind_glos, bid_glos, isi_eng_glos, isi_ind_glos) VALUES ?",
     [
       glosarium.map((glos) => [
-        glos.judul_glos,
-        glos.bid_glos.map((i) => [i]),
-        glos.isi_glos,
+        glos.judul_eng_glos,
+        glos.judul_ind_glos,
+        JSON.stringify(glos.bid_glos),
+        glos.isi_eng_glos,
+        glos.isi_ind_glos,
       ]),
     ],
     (err, hasil) => {
@@ -158,7 +160,7 @@ export const getGlossariumCadanganDb = (res) => {
 
 export const getIstilahCadanganDb = (res) => {
   db.query(
-    "SELECT id_glos, judul_glos, bid_glos, isi_glos, bahasa, view FROM istilah_manual2",
+    "SELECT id_glos, judul_eng_glos, judul_ind_glos, bid_glos, isi_eng_glos, isi_ind_glos, view FROM istilah_manual2",
     (err, hasil) => {
       if (err) {
         console.log(err);
@@ -173,6 +175,21 @@ export const getIstilahCadanganDb = (res) => {
 export const hapusIstilahManual = (id, result) => {
   db.query(
     "DELETE FROM istilah_manual WHERE id_glos = ?",
+    [id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
+export const hapusManual2 = (id, result) => {
+  db.query(
+    "DELETE FROM istilah_manual2 WHERE id_glos = ?",
     [id],
     (err, results) => {
       if (err) {
