@@ -213,6 +213,21 @@ export const getCadanganEngDb = (res) => {
   });
 };
 
+export const putEng = (data, id, result) => {
+  db.query(
+    "UPDATE en_id_manual SET judul_artikel = ?, isi_artikel = ? WHERE id = ?",
+    [data.judul_artikel, data.isi_artikel, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 export const delKataEngin = (id, result) => {
   db.query("DELETE FROM en_id_manual WHERE id = ?", [id], (err, results) => {
     if (err) {
@@ -234,6 +249,21 @@ export const postInEngDb = (idEng, res) => {
         res(err, null);
       } else {
         res(null, hasil);
+      }
+    }
+  );
+};
+
+export const putInd = (data, id, result) => {
+  db.query(
+    "UPDATE id_eng_manual SET judul_artikel = ?, isi_artikel = ? WHERE id = ?",
+    [data.judul_artikel, data.isi_artikel, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
       }
     }
   );

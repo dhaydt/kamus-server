@@ -13,6 +13,8 @@ import {
   getPopInEngDb,
   postEnginDb,
   postInEngDb,
+  putEng,
+  putInd,
 } from "../models/translatorModel.js";
 
 export const getInd = (req, res) => {
@@ -114,6 +116,18 @@ export const postEngIn = (req, res) => {
   });
 };
 
+export const updateEng = (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  putEng(data, id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
 export const getEngCad = (req, res) => {
   getCadanganEngDb((err, hasil) => {
     if (err) {
@@ -144,6 +158,18 @@ export const postIdEng = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const updateInd = (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  putInd(data, id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
     }
   });
 };

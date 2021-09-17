@@ -9,6 +9,8 @@ import {
   hapusManual2,
   postGlos2,
   postGlosDb,
+  putGlos,
+  putIstilah,
 } from "../models/glossariumModel.js";
 
 export const getGlossarium = (req, res) => {
@@ -65,6 +67,30 @@ export const postGlos = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const updateGlos = (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  putGlos(data, id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
+    }
+  });
+};
+
+export const updateIstilah = (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  putIstilah(data, id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
     }
   });
 };

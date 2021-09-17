@@ -226,8 +226,8 @@ export const postKamusDb = (records, result) => {
 
 export const putKamus = (data, id, result) => {
   db.query(
-    "UPDATE kamus SET kata = ?, keterangan = ?, type = ? WHERE _id = ?",
-    [data.kata, data.keterangan, data.type, id],
+    "UPDATE kamus_manual SET kata = ?, keterangan = ?, tipe = ? WHERE _id = ?",
+    [data.kata, data.keterangan, data.tipe, id],
     (err, results) => {
       if (err) {
         console.log(err);

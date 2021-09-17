@@ -15,6 +15,8 @@ import {
   hapusKamusEng,
   postEngIn,
   postIdEng,
+  updateEng,
+  updateInd,
 } from "../controllers/translatorController.js";
 import {
   cariGlos,
@@ -27,6 +29,8 @@ import {
   hapusIstilahUtama,
   postGlos,
   postGlosarium2,
+  updateGlos,
+  updateIstilah,
 } from "../controllers/glossariumController.js";
 import {
   createKamus,
@@ -49,6 +53,7 @@ import {
   getNamaCadangan,
   getPopNama,
   postNama,
+  updateNama,
 } from "../controllers/namaController.js";
 import {
   destroyReport,
@@ -96,7 +101,7 @@ router.get("/kamusCadangan", showKamusCadangan);
 router.get("/kamus/pop", getPop);
 router.post("/kamus", createKamus);
 router.post("/postkamus", postKamusRow);
-router.put("/kamus/:id", updateKamus);
+router.put("/kamusCadangan/:id", updateKamus);
 router.delete("/kamus/:id", destroyKamus);
 router.delete("/kamusCadangan/:id", destroyKamusCadangan);
 router.get("/find/:kata", search);
@@ -104,7 +109,9 @@ router.get("/find/:kata", search);
 // Glosarium
 router.get("/glossarium", getGlossarium);
 router.get("/glossariumCadangan", getGlossariumCadangan);
+router.put("/glossariumCadangan/:id", updateGlos);
 router.get("/glossariumCadangan2", getIstilahCadangan);
+router.put("/glossariumCadangan2/:id", updateIstilah);
 router.get("/istilah/pop", getPopGlos);
 router.post("/postGlos", postGlos);
 router.post("/postGlos2", postGlosarium2);
@@ -118,6 +125,7 @@ router.get("/nama", getNama);
 router.get("/nama/pop", getPopNama);
 router.get("/allNama", getNamaAll);
 router.get("/allNamaCadangan", getNamaCadangan);
+router.put("/allNamaCadangan/:id", updateNama);
 router.get("/findNama/:nama", cariNama);
 router.post("/postNama", postNama);
 router.delete("/allNama/:id", destroyNama);
@@ -127,6 +135,7 @@ router.delete("/allNamaCadangan/:id", destroyNamaCadangan);
 // in-eng
 router.get("/kamusInd", getInd);
 router.get("/engInCadangan", getEngCad);
+router.put("/engInCadangan/:id", updateEng);
 router.post("/postEng", postEngIn);
 router.get("/translateInd/:kata", cariEng);
 router.get("/engin/pop", getPopEngIn);
@@ -139,6 +148,7 @@ router.get("/kamusEng", getEng);
 router.get("/translateEng/:kata", cariInd);
 router.delete("/kamusEng/:id", hapusKamInd);
 router.delete("/kamusEngCad/:id", hapusIdEngCadangan);
+router.put("/kamusEngCad/:id", updateInd);
 router.get("/kamusEngCad/", getIndCad);
 router.post("/postInd", postIdEng);
 

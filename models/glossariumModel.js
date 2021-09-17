@@ -108,6 +108,43 @@ export const postGlosDb = (glosarium, res) => {
   );
 };
 
+export const putGlos = (data, id, result) => {
+  db.query(
+    "UPDATE istilah_manual SET judul_glos = ?, bid_glos = ?, isi_glos = ?, bahasa = ? WHERE id_glos = ?",
+    [data.judul_glos, data.bid_glos, data.isi_glos, data.bahasa, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
+export const putIstilah = (data, id, result) => {
+  db.query(
+    "UPDATE istilah_manual2 SET judul_eng_glos = ?,judul_ind_glos = ?, bid_glos = ?, isi_eng_glos = ?, isi_ind_glos = ? WHERE id_glos = ?",
+    [
+      data.judul_eng_glos,
+      data.judul_ind_glos,
+      data.bid_glos,
+      data.isi_eng_glos,
+      data.isi_ind_glos,
+      id,
+    ],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 export const postGlos2 = (glosarium, res) => {
   db.query(
     "INSERT INTO istilah_manual2 (judul_eng_glos, judul_ind_glos, bid_glos, isi_eng_glos, isi_ind_glos) VALUES ?",

@@ -119,13 +119,28 @@ export const delNama = (id, result) => {
 
 export const getNamaCadanganDb = (res) => {
   db.query(
-    "SELECT id, judul_nama, isi_nama, kelamin_nama, view  FROM nama_manual ORDER BY id",
+    "SELECT id, judul_nama, isi_nama,asal_nama, kelamin_nama, view  FROM nama_manual ORDER BY id",
     (err, hasil) => {
       if (err) {
         console.log(err);
         res(err, null);
       } else {
         res(null, hasil);
+      }
+    }
+  );
+};
+
+export const putNama = (data, id, result) => {
+  db.query(
+    "UPDATE nama_manual SET judul_nama = ?, kelamin_nama = ?, asal_nama = ?, isi_nama = ? WHERE id = ?",
+    [data.judul_nama, data.kelamin_nama, data.asal_nama, data.isi_nama, id],
+    (err, results) => {
+      if (err) {
+        console.log(err);
+        result(err, null);
+      } else {
+        result(null, results);
       }
     }
   );

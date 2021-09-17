@@ -7,6 +7,7 @@ import {
   getNamaDb,
   getPopNamaDb,
   postNamaDb,
+  putNama,
 } from "../models/namaModel.js";
 
 export const getNama = (req, res) => {
@@ -85,6 +86,18 @@ export const getNamaCadangan = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const updateNama = (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
+  putNama(data, id, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(results);
     }
   });
 };
