@@ -125,8 +125,8 @@ export const filterTable = (kata, result) => {
 
 export const searchWord = (word, result) => {
   db.query(
-    "SELECT * FROM kamus WHERE kata = ? UNION ALL SELECT * FROM kamus_manual WHERE kata = ?",
-    [word, word],
+    "SELECT * FROM kamus WHERE kata = ? AND tipe = ? UNION ALL SELECT * FROM kamus_manual WHERE kata = ? AND tipe = ?",
+    [word, "kbbi", word, "kbbi"],
     (err, results) => {
       if (results == null) {
         result(null, { message: "data not found" });
