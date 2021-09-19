@@ -5,6 +5,8 @@ import {
   delKamusEng,
   delKataEngin,
   delKataIdeng,
+  filterEng,
+  filterInd,
   getCadanganEngDb,
   getCadanganIndDb,
   getEngDb,
@@ -75,6 +77,30 @@ export const cariEng = (req, res) => {
       res.send(err);
     } else {
       res.json(hasil);
+    }
+  });
+};
+
+export const filtersInd = (req, res) => {
+  const kata = req.params.kata;
+  filterInd(kata, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+};
+
+export const filtersEng = (req, res) => {
+  const kata = req.params.kata;
+  filterEng(kata, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
+      res.json(results);
     }
   });
 };

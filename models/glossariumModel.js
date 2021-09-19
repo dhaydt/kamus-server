@@ -47,6 +47,21 @@ export const cariGlosDb = (kata, res) => {
   );
 };
 
+export const filterGlos = (kata, result) => {
+  const word = "%" + kata + "%";
+  db.query(
+    "SELECT * FROM istilah WHERE judul_glos LIKE ?",
+    [word],
+    (err, results) => {
+      if (results == null) {
+        result(null, { message: "data not found" });
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 const getRandom = (res) => {
   db.query(
     "SELECT id, judul_artikel, isi_artikel FROM id_eng ORDER BY RAND() LIMIT 5",

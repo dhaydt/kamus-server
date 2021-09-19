@@ -1,5 +1,6 @@
 import {
   cariGlosDb,
+  filterGlos,
   getGlossariumCadanganDb,
   getGlossariumDb,
   getIstilahCadanganDb,
@@ -41,6 +42,18 @@ export const cariGlos = (req, res) => {
     } else {
       console.log(hasil);
       res.json(hasil);
+    }
+  });
+};
+
+export const filtersGlos = (req, res) => {
+  const kata = req.params.kata;
+  filterGlos(kata, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
+      res.json(results);
     }
   });
 };

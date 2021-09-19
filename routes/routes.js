@@ -3,6 +3,8 @@ import express from "express";
 import {
   cariEng,
   cariInd,
+  filtersEng,
+  filtersInd,
   getEng,
   getEngCad,
   getInd,
@@ -20,6 +22,7 @@ import {
 } from "../controllers/translatorController.js";
 import {
   cariGlos,
+  filtersGlos,
   getGlossarium,
   getGlossariumCadangan,
   getIstilahCadangan,
@@ -36,6 +39,7 @@ import {
   createKamus,
   destroyKamus,
   destroyKamusCadangan,
+  filtersTable,
   getGlobalRandom,
   getPop,
   postKamusRow,
@@ -48,6 +52,7 @@ import {
   cariNama,
   destroyNama,
   destroyNamaCadangan,
+  filtersNama,
   getNama,
   getNamaAll,
   getNamaCadangan,
@@ -89,6 +94,7 @@ import {
   destroyUser,
   getUser,
 } from "../controllers/userController.js";
+import { filterInd } from "../models/translatorModel.js";
 // init express rout
 const router = express.Router();
 
@@ -176,6 +182,47 @@ router.get("/getAtasShared", getAtasShared);
 router.get("/getSideAtas", getSideAtas);
 router.get("/getSideTengah", getSideTengah);
 router.get("/getSideBawah", getSideBawah);
+
+// table FILTER
+router.get("/filKbbi/:kata", filtersTable);
+router.get("/filGlos/:kata", filtersGlos);
+router.get("/filNama/:kata", filtersNama);
+router.get("/filEng/:kata", filtersEng);
+router.get("/filInd/:kata", filtersInd);
+
+// pagination
+const resultPerPage = 30;
+router.get("/kbbiPagi", (req, res) => {
+  let sql = "SELECT * FROM kamus";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    const numOfResults = result.length;
+    const numberOfPages = Math.ceil(numOfResults / resultPerPage);
+
+    let page = req.query.page ? Number(req.query.page) : 1;
+
+    if (page > numberOfPages) {
+      res.redirect("/?page=" + encodeURIComponent(numberOfPages));
+    } else if (page < 1) {
+      res.redirect("/?page=" + encodeURIComponent("1"));
+    }
+
+    const startingLimit = (page - 1) * resultPerPage;
+    sql = `SELECT * FROM kamus LIMIT ${startingLimit}, ${resultPerPage}`;
+    db.query(sql, (err, result) => {
+      if (err) throw err;
+      let iterator = page - 5 < 1 ? 1 : page - 5;
+      let endingLink =
+        iterator + 9 <= numberOfPages
+          ? iterator + 9
+          : page + (numberOfPages - page);
+      if (endingLink < page + 4) {
+        iterator -= page + 4 - numberOfPages;
+      }
+      res.json({ data: result, page, iterator, endingLink, numberOfPages });
+    });
+  });
+});
 
 // Auth
 router.get("/getUser", getUser);

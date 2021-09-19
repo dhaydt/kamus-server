@@ -33,6 +33,36 @@ export const getEngDb = (res) => {
   });
 };
 
+export const filterInd = (kata, res) => {
+  const word = "%" + kata + "%";
+  db.query(
+    "SELECT * FROM id_eng WHERE judul_artikel LIKE ?",
+    [word],
+    (err, hasil) => {
+      if (hasil == null) {
+        res(err, { message: "data not found" });
+      } else {
+        res(null, hasil);
+      }
+    }
+  );
+};
+
+export const filterEng = (kata, result) => {
+  const word = "%" + kata + "%";
+  db.query(
+    "SELECT * FROM en_id WHERE judul_artikel LIKE ?",
+    [word],
+    (err, results) => {
+      if (results == null) {
+        result(null, { message: "data not found" });
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 export const getPopInEngDb = (res) => {
   db.query(
     "SELECT id, judul_artikel, view FROM id_eng ORDER BY view DESC LIMIT 10",

@@ -112,32 +112,16 @@ export const getKamus = (result) => {
   });
 };
 
-// export const postKamus = (data, result) => {
-//   db.query("INSERT INTO kamus SET ?", [data], (err, results) => {
-//     if (err) {
-//       console.log(err);
-//       result(err, null);
-//     } else {
-//       result(null, results);
-//     }
-//   });
-// };
-
-// export const searchWord = (word, result) => {
-//   db.query("SELECT * FROM kamus WHERE kata = ?", [word], (err, results) => {
-//     if (results == null) {
-//       result(null, { message: "data not found" });
-//     } else {
-//       getRelatedInEng(word, (err, hasil) => {
-//         getRandom((err, random) => {
-//           console.log({ kbbi: results, related: hasil, random: random });
-//           result(null, { kbbi: results, related: hasil, random: random });
-//           postView(word);
-//         });
-//       });
-//     }
-//   });
-// };
+export const filterTable = (kata, result) => {
+  const word = "%" + kata + "%";
+  db.query("SELECT * FROM kamus WHERE kata LIKE ?", [word], (err, results) => {
+    if (results == null) {
+      result(null, { message: "data not found" });
+    } else {
+      result(null, results);
+    }
+  });
+};
 
 export const searchWord = (word, result) => {
   db.query(

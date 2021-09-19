@@ -2,6 +2,7 @@ import {
   cariNamaDb,
   delNama,
   delNamaCadangan,
+  filterNama,
   getNamaAllDb,
   getNamaCadanganDb,
   getNamaDb,
@@ -49,6 +50,18 @@ export const cariNama = (req, res) => {
     } else {
       console.log(hasil);
       res.json(hasil);
+    }
+  });
+};
+
+export const filtersNama = (req, res) => {
+  const kata = req.params.kata;
+  filterNama(kata, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
+      res.json(results);
     }
   });
 };

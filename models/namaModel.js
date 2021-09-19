@@ -55,6 +55,21 @@ export const cariNamaDb = (nama, res) => {
   );
 };
 
+export const filterNama = (kata, result) => {
+  const word = "%" + kata + "%";
+  db.query(
+    "SELECT * FROM nama WHERE judul_nama LIKE ?",
+    [word],
+    (err, results) => {
+      if (results == null) {
+        result(null, { message: "data not found" });
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 const getRelatedEngIn = (nama, result) => {
   const data = "%" + nama + "%";
   db.query(
