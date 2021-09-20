@@ -126,7 +126,13 @@ export const postGlosDb = (glosarium, res) => {
 export const putGlos = (data, id, result) => {
   db.query(
     "UPDATE istilah_manual SET judul_glos = ?, bid_glos = ?, isi_glos = ?, bahasa = ? WHERE id_glos = ?",
-    [data.judul_glos, data.bid_glos, data.isi_glos, data.bahasa, id],
+    [
+      data.judul_glos,
+      JSON.stringify(data.bid_glos),
+      data.isi_glos,
+      data.bahasa,
+      id,
+    ],
     (err, results) => {
       if (err) {
         console.log(err);
@@ -144,7 +150,7 @@ export const putIstilah = (data, id, result) => {
     [
       data.judul_eng_glos,
       data.judul_ind_glos,
-      data.bid_glos,
+      JSON.stringify(data.bid_glos),
       data.isi_eng_glos,
       data.isi_ind_glos,
       id,
