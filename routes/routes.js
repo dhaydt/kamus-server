@@ -39,6 +39,7 @@ import {
   createKamus,
   destroyKamus,
   destroyKamusCadangan,
+  filtersManual,
   filtersTable,
   getGlobalRandom,
   getPop,
@@ -185,6 +186,7 @@ router.get("/getSideBawah", getSideBawah);
 
 // table FILTER
 router.get("/filKbbi/:kata", filtersTable);
+router.get("/filKbbiManual/:kata", filtersManual);
 router.get("/filGlos/:kata", filtersGlos);
 router.get("/filNama/:kata", filtersNama);
 router.get("/filEng/:kata", filtersEng);

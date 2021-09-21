@@ -123,6 +123,21 @@ export const filterTable = (kata, result) => {
   });
 };
 
+export const filterManual = (kata, result) => {
+  const word = "%" + kata + "%";
+  db.query(
+    "SELECT * FROM kamus_manual WHERE kata LIKE ?",
+    [word],
+    (err, results) => {
+      if (results == null) {
+        result(null, { message: "data not found" });
+      } else {
+        result(null, results);
+      }
+    }
+  );
+};
+
 export const searchWord = (word, result) => {
   db.query(
     "SELECT * FROM kamus WHERE kata = ? AND tipe = ? UNION ALL SELECT * FROM kamus_manual WHERE kata = ? AND tipe = ?",

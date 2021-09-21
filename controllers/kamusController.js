@@ -1,6 +1,7 @@
 import {
   delKamus,
   delKamusCadangan,
+  filterManual,
   filterTable,
   getGlobalDB,
   getKamus,
@@ -97,6 +98,18 @@ export const destroyKamus = (req, res) => {
 export const filtersTable = (req, res) => {
   const kata = req.params.kata;
   filterTable(kata, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(results);
+      res.json(results);
+    }
+  });
+};
+
+export const filtersManual = (req, res) => {
+  const kata = req.params.kata;
+  filterManual(kata, (err, results) => {
     if (err) {
       res.send(err);
     } else {
